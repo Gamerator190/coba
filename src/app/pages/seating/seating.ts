@@ -1,5 +1,4 @@
-import { Component, AfterViewInit, Inject, NgZone } from '@angular/core';
-import { DOCUMENT } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-seating',
@@ -8,30 +7,8 @@ import { DOCUMENT } from '@angular/core';
   styleUrl: './seating.css',
 })
 export class Seating {
-  seats = [
-    {id: 'A1', x:930, y:130, status: 'available'},
-  ]
-  constructor(@Inject(DOCUMENT) private document: Document, private zone: NgZone) {}
-  ngAfterViewInit(): void {
-    this.zone.runOutsideAngular(() => {
-      this.seats.forEach(seat => {
-        const svg = this.document.querySelector<SVGSVGElement>('#seat-layer')!;
-
-      const circle = this.document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-      circle.setAttribute('cx', seat.x.toString());
-      circle.setAttribute('cy', seat.y.toString());
-      circle.setAttribute('r', '8');
-      // circle.setAttribute('class', 'seat');
-      circle.setAttribute('fill', 'blue');
-
-      circle.addEventListener('click', () => {
-        alert('Clicked test seat!');
-      });
-
-      svg.appendChild(circle);
-      })
-      
-    })
-    
+  activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left'
+  showSection(section: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right') {
+    this.activeSection = section
   }
 }
