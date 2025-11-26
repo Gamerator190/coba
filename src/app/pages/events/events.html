@@ -1,0 +1,30 @@
+<!-- BEGIN PAGE HEADER -->
+<div class="page-header d-print-none" aria-label="Page header">
+  <div class="container-xl">
+    <div class="row g-2 align-items-center">
+      <div class="col">
+        <h2 class="page-title">Event</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="page-body">
+  <div class="container-xl">
+    @for(event of data; track event.id) {
+    <div>
+      <app-shared-event
+        [title]="event.title"
+        [picture]="event.picture"
+        [time]="event.time"
+        [date]="event.date"
+        [location]="event.location"
+        [description]="event.description"
+        [ticket_availability]="event.ticket_availability"
+      >
+      </app-shared-event>
+    </div>
+    }
+  </div>
+</div>
