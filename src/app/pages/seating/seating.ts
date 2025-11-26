@@ -8,6 +8,8 @@ import { Component, HostListener, ElementRef, Renderer2, AfterViewInit } from '@
 })
 export class Seating implements AfterViewInit {
   selectedSeats: Set<string> = new Set();
+  Array = Array; // Expose Array for use in template
+  seatPrice: number = 6; // Each seat costs $6
 
   activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = null;
 
@@ -20,6 +22,14 @@ export class Seating implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.attachSeatClickListeners();
+  }
+
+  getSelectedSeatsArray(): string[] {
+    return Array.from(this.selectedSeats).sort();
+  }
+
+  getTotalPrice(): number {
+    return this.selectedSeats.size * this.seatPrice;
   }
 
   attachSeatClickListeners(): void {
@@ -41,8 +51,21 @@ export class Seating implements AfterViewInit {
           this.renderer.addClass(seat, 'clicked');
           this.selectedSeats.add(seatId);
         }
+        this.updateOrderSummary();
       });
     });
+  }
+
+  updateOrderSummary(): void {
+    const orderSummary = this.el.nativeElement.querySelector('.card-body p');
+    if (orderSummary) {
+      const seatsArray = Array.from(this.selectedSeats).sort();
+      if (seatsArray.length === 0) {
+        orderSummary.textContent = 'No seats selected. Select seats to continue.';
+      } else {
+        orderSummary.innerHTML = `<strong>Selected Seats (${seatsArray.length}):</strong><br>${seatsArray.join(', ')}`;
+      }
+    }
   }
 
   // @HostListener('click')
