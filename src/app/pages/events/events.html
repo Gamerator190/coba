@@ -15,6 +15,7 @@
     @for(event of data; track event.id) {
     <div>
       <app-shared-event
+        [id]="event.id"
         [title]="event.title"
         [picture]="event.picture"
         [time]="event.time"

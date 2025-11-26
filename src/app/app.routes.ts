@@ -14,13 +14,13 @@ export const routes: Routes = [
     component: Home
   },
   {
-    path: 'seating',
-    component: Seating
-  },
-  {
     path: 'events',
     component: Events
-  }
+  },
+  {
+    path: 'events/:id',
+    component: Seating
+  },
 //   {
 //     path: 'event',
 //     component: Event,
