@@ -8,10 +8,14 @@
     height: 30px;
     color: white;
     font-size: 12px;
-    background-color: black;
+    background-color: green;
     margin: 10px 5px;
     text-align: center;
     align-items: center;
+}
+
+.clicked {
+    background-color: blue !important;
 }
 
 .letters {
