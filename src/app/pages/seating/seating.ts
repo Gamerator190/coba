@@ -1,4 +1,6 @@
-import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Event as EventService } from '../../services/event';
 
 @Component({
   selector: 'app-seating',
@@ -7,6 +9,13 @@ import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDe
   styleUrl: './seating.css',
 })
 export class Seating implements AfterViewInit {
+
+  private eventService = inject(EventService);
+  data = this.eventService.data;
+
+  private route = inject(ActivatedRoute);
+  eventTitle: string = '';
+
   selectedSeats: Set<string> = new Set();
   Array = Array;
   seatPrice: number = 6; // Temporarily, each seat costs $6
@@ -27,6 +36,18 @@ export class Seating implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.attachSeatClickListeners();
+    this.loadEventFromRoute();
+  }
+
+  loadEventFromRoute(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (!idParam) return;
+    const id = Number(idParam);
+    const ev = Array.isArray(this.data) ? this.data.find((x: any) => x.id === id) : null;
+    if (ev && ev.title) {
+      this.eventTitle = ev.title;
+      this.cdr.detectChanges();
+    }
   }
 
   getSelectedSeatsArray(): string[] {
