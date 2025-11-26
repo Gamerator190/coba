@@ -7,12 +7,12 @@ import { Component, HostListener, ElementRef, Renderer2, AfterViewInit } from '@
   styleUrl: './seating.css',
 })
 export class Seating implements AfterViewInit {
-  activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left'
+  activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = null;
   showSection(section: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right') {
     this.activeSection = section
     setTimeout(() => this.attachSeatClickListeners(), 0);
   }
-  
+
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
