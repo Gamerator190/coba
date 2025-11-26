@@ -1,4 +1,4 @@
-import { Component, HostListener, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-seating',
@@ -8,17 +8,22 @@ import { Component, HostListener, ElementRef, Renderer2, AfterViewInit } from '@
 })
 export class Seating implements AfterViewInit {
   selectedSeats: Set<string> = new Set();
-  Array = Array; // Expose Array for use in template
-  seatPrice: number = 6; // Each seat costs $6
+  Array = Array;
+  seatPrice: number = 6; // Temporarily, each seat costs $6
 
-  activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = null;
+  activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left';
 
   showSection(section: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right') {
-    this.activeSection = section
-    setTimeout(() => this.attachSeatClickListeners(), 0);
+    if (this.activeSection === section) {
+      this.attachSeatClickListeners();
+    } else {
+      this.activeSection = section;
+      this.cdr.detectChanges();
+      setTimeout(() => this.attachSeatClickListeners(), 0);
+    }
   }
 
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  constructor(private el: ElementRef, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
     this.attachSeatClickListeners();
@@ -43,16 +48,21 @@ export class Seating implements AfterViewInit {
         this.renderer.addClass(seat, 'clicked');
       }
       
-      seat.addEventListener('click', () => {
-        if (seat.classList.contains('clicked')) {
-          this.renderer.removeClass(seat, 'clicked');
+      const newSeat = seat.cloneNode(true) as HTMLElement;
+      newSeat.addEventListener('click', () => {
+        if (newSeat.classList.contains('clicked')) {
+          this.renderer.removeClass(newSeat, 'clicked');
           this.selectedSeats.delete(seatId);
         } else {
-          this.renderer.addClass(seat, 'clicked');
+          this.renderer.addClass(newSeat, 'clicked');
           this.selectedSeats.add(seatId);
         }
         this.updateOrderSummary();
       });
+      
+      if (seat.parentNode) {
+        seat.parentNode.replaceChild(newSeat, seat);
+      }
     });
   }
 

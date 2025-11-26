@@ -3,34 +3,47 @@
     <img src="auditorium.png" id="auditorium-img" />
     <div id="order-summary">
       <div class="card">
-        <div class="card-body">
+        <div class="card-body" style="text-align: left; background-color: #d0d4d6; border: 1px solid #000;">
           <h3 class="card-title">Order Summary</h3>
           @if(selectedSeats.size === 0) {
-            <p class="text-secondary">No seats selected. Select seats to continue.</p>
+          <p class="text-secondary">No seats selected. Select seats to continue.</p>
           } @else {
-            <div>
-              <strong>{{ selectedSeats.size }} Ticket(s):</strong>
-              <ul style="list-style: none; padding: 10px 0; margin: 0;">
-                @for(seat of getSelectedSeatsArray(); track seat) {
-                  <li style="display: flex; justify-content: space-between; padding: 5px 0;">
-                    <span>{{ seat }}</span>
-                    <span>${{ seatPrice }}</span>
-                  </li>
-                }
-              </ul>
-              <hr style="margin: 10px 0; border: 1px solid #000;">
-              <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 16px;">
-                <span>Total:</span>
-                <span>${{ getTotalPrice() }}</span>
-              </div>
+          <div style="text-align: left">
+            <strong>{{ selectedSeats.size }} Ticket(s):</strong>
+            <ul style="list-style: none; padding: 10px 0; margin: 0">
+              @for(seat of getSelectedSeatsArray(); track seat) {
+              <li style="display: flex; justify-content: space-between; padding: 5px 0">
+                <span>{{ seat }}</span>
+                <span>${{ seatPrice }}</span>
+              </li>
+              }
+            </ul>
+            <hr style="margin: 10px 0; border: 1px solid #000" />
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                font-weight: bold;
+                font-size: 16px;
+              "
+            >
+              <span>Total:</span>
+              <span>${{ getTotalPrice() }}</span>
             </div>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 20px"
+            >Confirm Booking</a
+          >
+          <div class="card-footer" style="display: flex; flex-direction: column; gap: 10px; background-color: #b0b3b6; border: 1px solid #000;">
+            <div>Do you have a promotional code or discount coupon?</div>
+            <input
+              type="text"
+              id="promo"
+              style="padding: 8px; border: 1px solid #ccc; border-radius: 4px"
+            />
+            <a href="#" class="btn btn-primary">Apply</a>
+          </div>
           }
-          <a href="#" class="btn btn-primary" style="margin-top: 15px;">Confirm Booking</a>
-        </div>
-        <div class="card-footer" style="display: flex; flex-direction: column; gap: 10px;">
-          <div>Do you have a promotional code or discount coupon?</div>
-          <input type="text" id="promo" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-          <a href="#" class="btn btn-primary">Apply</a>
         </div>
       </div>
     </div>
