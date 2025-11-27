@@ -19,11 +19,11 @@ export const routes: Routes = [
     component: Events
   },
   {
-    path: 'events/:id',
+    path: 'event/:id',
     component: Seating
   },
   {
-    path: 'events/:id/payment',
+    path: 'event/:id/payment',
     component: Payment
   }
 //   {
