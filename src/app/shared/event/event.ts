@@ -19,4 +19,5 @@ export class Event {
   @Input() ticketAvailability: number = 0;
   @Input() promoCode: string = '';
   @Input() promoValue: number = 0;
+  @Input() unavailableSeats: string[] = [];
 }

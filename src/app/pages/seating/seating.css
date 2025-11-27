@@ -19,6 +19,12 @@
     background-color: blue !important;
 }
 
+.unavailable {
+    background-color: red !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}
+
 .letters {
     display: grid;
     width: 30px;

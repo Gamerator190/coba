@@ -15,7 +15,8 @@ export class Event {
       description: 'Join us for a festive celebration in Central Park with live music, food stalls, and holiday activities for all ages. Don\'t miss the tree lighting ceremony at dusk!',
       ticketAvailability: 617,
       promoCode: 'WELCOME15',
-      promoValue: 15
+      promoValue: 15,
+      unavailableSeats: ['a-1', 'b-2', 'c-3', 'd-4', 'e-5']
     },
     // {
     //   id: 2,

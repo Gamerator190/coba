@@ -25,6 +25,7 @@ export class Seating implements AfterViewInit {
 
   activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left';
 
+  unavailableSeats: Set<string> = new Set();
   promoCode: string = '';
   promoValue: number = 0;
   discount: number = 0;
@@ -62,6 +63,9 @@ export class Seating implements AfterViewInit {
       if (ev.promoValue) {
         this.promoValue = ev.promoValue;
       }
+      if (ev.unavailableSeats && Array.isArray(ev.unavailableSeats)) {
+        this.unavailableSeats = new Set(ev.unavailableSeats);
+      } // seat coordinate syntax = same as in order summary
       this.cdr.detectChanges();
     }
   }
@@ -70,7 +74,7 @@ export class Seating implements AfterViewInit {
     return Array.from(this.selectedSeats).sort();
   }
 
-  getTotalPrice(): number {
+  getTotalPrice(): number { //temporary
     return this.selectedSeats.size * this.seatPrice;
   }
 
@@ -101,8 +105,16 @@ export class Seating implements AfterViewInit {
         this.renderer.addClass(seat, 'clicked');
       }
       
+      const isUnavailable = this.unavailableSeats.has(seatId);
+      if (isUnavailable) {
+        this.renderer.addClass(seat, 'unavailable');
+      }
+      
       const newSeat = seat.cloneNode(true) as HTMLElement;
       newSeat.addEventListener('click', () => {
+        if (isUnavailable) {
+          return; // Do nothing if seat is unavailable
+        }
         if (newSeat.classList.contains('clicked')) {
           this.renderer.removeClass(newSeat, 'clicked');
           this.selectedSeats.delete(seatId);
