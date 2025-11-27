@@ -4,6 +4,7 @@ import { Seating } from './pages/seating/seating';
 import { Events } from './pages/events/events';
 import { Payment } from './pages/payment/payment';
 import { Dashboard } from './pages/dashboard/dashboard';
+import { Waitlist } from './pages/waitlist/waitlist';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
   {
     path: 'event/:id/payment',
     component: Payment
+  },
+  {
+    path: 'event/:id/waitlist',
+    component: Waitlist
   },
   {
     path: 'dashboard',

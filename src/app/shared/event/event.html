@@ -1,8 +1,6 @@
-<div class="card">
+<div class="card" style="margin-bottom: 20px">
   <div class="row row-0">
-    <div
-      class="col-2"
-    >
+    <div class="col-2">
       <img
         src="{{ picture }}"
         class="w-100 h-100 object-cover card-img-start"
@@ -11,9 +9,15 @@
     </div>
     <div class="col">
       <div class="card-body">
+        @if(ticketAvailability === 0) {
+        <a [routerLink]="'/event/' + id + '/waitlist'">
+          <h3 class="card-title">{{ title }} (Sold Out)</h3>
+        </a>
+        } @else {
         <a [routerLink]="'/event/' + id">
           <h3 class="card-title">{{ title }}</h3>
         </a>
+        }
         <p class="text-secondary">
           {{ time }}<br />
           {{ date }}<br />
