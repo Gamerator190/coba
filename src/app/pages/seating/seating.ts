@@ -1,5 +1,5 @@
-import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef, inject, Input } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Event as EventService } from '../../services/event';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-seating',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './seating.html',
   styleUrl: './seating.css',
 })
@@ -18,6 +18,7 @@ export class Seating implements AfterViewInit {
 
   private route = inject(ActivatedRoute);
   eventTitle: string = '';
+  id: number | null = null;
 
   selectedSeats: Set<string> = new Set();
   Array = Array;
@@ -52,6 +53,7 @@ export class Seating implements AfterViewInit {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (!idParam) return;
     const id = Number(idParam);
+    this.id = id;
     const ev = Array.isArray(this.data) ? this.data.find((x: any) => x.id === id) : null;
     if (ev) {
       if (ev.title) {

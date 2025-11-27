@@ -41,7 +41,7 @@
               <span style="color: #066fd1;">${{ getTotalPrice()*(100-discount)/100 }}</span>
             </div>
           </div>
-          <a href="#" class="btn btn-primary" style="display: block; width: 100%; text-align: center; margin-top: 15px; margin-bottom: 20px;">
+          <a [routerLink]="'/events/' + id + '/payment'" class="btn btn-primary" style="display: block; width: 100%; text-align: center; margin-top: 15px; margin-bottom: 20px;">
             Confirm Booking
           </a>
           <div
