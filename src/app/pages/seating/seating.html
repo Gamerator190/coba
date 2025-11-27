@@ -8,7 +8,7 @@
           class="card-body"
           style="text-align: left; background-color: #d0d4d6; border: 1px solid #000"
         >
-          <h3 class="card-title">Order Summary</h3>
+          <u><h3 class="card-title">Order Summary</h3></u>
           @if(selectedSeats.size === 0) {
           <p class="text-secondary">No seats selected. Select seats to continue.</p>
           } @else {
@@ -17,9 +17,15 @@
             <ul style="list-style: none; padding: 10px 0; margin: 0">
               @for(seat of getSelectedSeatsArray(); track seat) {
               <li style="display: flex; justify-content: space-between; padding: 5px 0">
-                <span>{{ seat }}</span>
+                <span>{{ "Seat " + seat }}</span>
                 <span>${{ seatPrice }}</span>
               </li>
+              }
+              @if(discount > 0) {
+                <li style="display: flex; justify-content: space-between; padding: 5px 0">
+                    <span>{{ promoCode }}</span>
+                    <span style="color: #066fd1;">(-{{ discount }}% discount) = -${{ getTotalPrice()*discount/100 }}</span>
+                </li>
               }
             </ul>
             <hr style="margin: 10px 0; border: 1px solid #000" />
@@ -32,12 +38,12 @@
               "
             >
               <span>Total:</span>
-              <span>${{ getTotalPrice() }}</span>
+              <span style="color: #066fd1;">${{ getTotalPrice()*(100-discount)/100 }}</span>
             </div>
           </div>
-          <a href="#" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 20px"
-            >Confirm Booking</a
-          >
+          <a href="#" class="btn btn-primary" style="display: block; width: 100%; text-align: center; margin-top: 15px; margin-bottom: 20px;">
+            Confirm Booking
+          </a>
           <div
             class="card-footer"
             style="
@@ -52,9 +58,13 @@
             <input
               type="text"
               id="promo"
+              [(ngModel)]="promoCode"
               style="padding: 8px; border: 1px solid #ccc; border-radius: 4px"
             />
-            <a href="#" class="btn btn-primary">Apply</a>
+            <button class="btn btn-primary" (click)="applyPromoCode()">Apply</button>
+            @if(discount > 0) {
+                <button class="btn btn-danger" (click)="removePromoCode()">Remove</button>
+            }
           </div>
           }
         </div>
@@ -62,7 +72,7 @@
     </div>
   </div>
 
-  <div class="card" style="margin: 10px 0px">
+  <div class="card" style="margin: 10px 0px; background-color: #d0d4d6;">
     <div id="buttons">
       <button class="btn" style="margin: 10px 5px" (click)="showSection('lower-foyer-left')">
         Lower Foyer (Left)

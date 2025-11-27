@@ -1,10 +1,13 @@
 import { Component, HostListener, ElementRef, Renderer2, AfterViewInit, ChangeDetectorRef, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Event as EventService } from '../../services/event';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-seating',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './seating.html',
   styleUrl: './seating.css',
 })
@@ -21,6 +24,10 @@ export class Seating implements AfterViewInit {
   seatPrice: number = 6; // Temporarily, each seat costs $6
 
   activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left';
+
+  promoCode: string = ''; //temporary
+  discount: number = 0;
+  total: number = 0;
 
   showSection(section: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right') {
     if (this.activeSection === section) {
@@ -57,6 +64,22 @@ export class Seating implements AfterViewInit {
   getTotalPrice(): number {
     return this.selectedSeats.size * this.seatPrice;
   }
+
+  //temporary
+
+  applyPromoCode() {
+    if (this.promoCode === 'WELCOME15') {
+      this.discount = 15;
+    } else {
+      this.discount = 0;
+    }
+  }
+
+  removePromoCode() {
+    this.discount = 0;
+  }
+
+  //temporary
 
   attachSeatClickListeners(): void {
     const seats = Array.from(this.el.nativeElement.querySelectorAll('.seat')) as HTMLElement[];
