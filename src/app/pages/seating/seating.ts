@@ -25,7 +25,8 @@ export class Seating implements AfterViewInit {
 
   activeSection: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right' | null = 'lower-foyer-left';
 
-  promoCode: string = ''; //temporary
+  promoCode: string = '';
+  promoValue: number = 0;
   discount: number = 0;
   total: number = 0;
 
@@ -51,8 +52,16 @@ export class Seating implements AfterViewInit {
     if (!idParam) return;
     const id = Number(idParam);
     const ev = Array.isArray(this.data) ? this.data.find((x: any) => x.id === id) : null;
-    if (ev && ev.title) {
-      this.eventTitle = ev.title;
+    if (ev) {
+      if (ev.title) {
+        this.eventTitle = ev.title;
+      }
+      if (ev.promo_code) {
+        this.promoCode = ev.promo_code;
+      }
+      if (ev.promo_value) {
+        this.promoValue = ev.promo_value;
+      }
       this.cdr.detectChanges();
     }
   }
@@ -68,8 +77,8 @@ export class Seating implements AfterViewInit {
   //temporary
 
   applyPromoCode() {
-    if (this.promoCode === 'WELCOME15') {
-      this.discount = 15;
+    if (this.promoCode) {
+      this.discount = this.promoValue;
     } else {
       this.discount = 0;
     }

@@ -14,6 +14,8 @@ export class Event {
       location: 'Location: Central Park, New York City',
       description: 'Join us for a festive celebration in Central Park with live music, food stalls, and holiday activities for all ages. Don\'t miss the tree lighting ceremony at dusk!',
       ticket_availability: 617,
+      promo_code: 'WELCOME15',
+      promo_value: 15
     },
     // {
     //   id: 2,
