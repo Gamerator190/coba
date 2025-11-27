@@ -30,6 +30,13 @@ export class Seating implements AfterViewInit {
   discount: number = 0;
   total: number = 0;
 
+  constructor(private el: ElementRef, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
+
+  ngAfterViewInit(): void {
+    this.attachSeatClickListeners();
+    this.loadEventFromRoute();
+  }
+
   showSection(section: 'lower-foyer-left' | 'lower-foyer-middle' | 'lower-foyer-right' | 'balcony-left' | 'balcony-middle' | 'balcony-right') {
     if (this.activeSection === section) {
       this.attachSeatClickListeners();
@@ -38,13 +45,6 @@ export class Seating implements AfterViewInit {
       this.cdr.detectChanges();
       setTimeout(() => this.attachSeatClickListeners(), 0);
     }
-  }
-
-  constructor(private el: ElementRef, private renderer: Renderer2, private cdr: ChangeDetectorRef) {}
-
-  ngAfterViewInit(): void {
-    this.attachSeatClickListeners();
-    this.loadEventFromRoute();
   }
 
   loadEventFromRoute(): void {
@@ -56,11 +56,11 @@ export class Seating implements AfterViewInit {
       if (ev.title) {
         this.eventTitle = ev.title;
       }
-      if (ev.promo_code) {
-        this.promoCode = ev.promo_code;
+      if (ev.promoCode) {
+        this.promoCode = ev.promoCode;
       }
-      if (ev.promo_value) {
-        this.promoValue = ev.promo_value;
+      if (ev.promoValue) {
+        this.promoValue = ev.promoValue;
       }
       this.cdr.detectChanges();
     }

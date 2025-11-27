@@ -16,7 +16,7 @@ export class Event {
   @Input() date: string = '';
   @Input() location: string = '';
   @Input() description: string = '';
-  @Input() ticket_availability: number = 0;
-  @Input() promo_code: string = '';
-  @Input() promo_value: number = 0;
+  @Input() ticketAvailability: number = 0;
+  @Input() promoCode: string = '';
+  @Input() promoValue: number = 0;
 }
